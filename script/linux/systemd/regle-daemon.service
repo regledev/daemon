@@ -1,0 +1,21 @@
+[Unit]
+Description=Regle Daemon
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+User=regle-daemon
+Environment=HOME=/var/lib/regle-daemon
+ExecStart=/usr/bin/regle-daemon --data-dir=$HOME/data --action-dir=$HOME/actions
+RestartSec=5
+Restart=on-failure
+RestartForceExitStatus=SIGPIPE
+TimeoutStartSec=10
+TimeoutStopSec=0
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+DefaultInstance=1
+
