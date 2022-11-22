@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # V0 install script for regle daemon
 # based on https://raw.githubusercontent.com/buildkite/agent/main/install.sh
@@ -11,8 +11,7 @@
 
 set -e
 
-RELEASE_URL=""
-COMMAND="bash -c \"\`curl -sL https://raw.githubusercontent.com/regledv/daemon/master/script/install.sh\`\""
+# COMMAND="bash -c \"\`curl -sL https://raw.githubusercontent.com/regledv/daemon/master/script/install.sh\`\""
 
 SYSTEM=$(uname -s | awk '{print tolower($0)}')
 MACHINE=$(uname -m | awk '{print tolower($0)}')
@@ -66,7 +65,7 @@ else
   esac
 fi
 
-RELEASE_INFO_URL="$RELEASE_URL/$PLATFORM&arch=$ARCH&prerelease=true&system=$SYSTEM&machine=$MACHINE"
+RELEASE_INFO_URL="https://raw.githubusercontent.com/regledev/daemon/main/RELEASE"
 
 if command -v wget >/dev/null; then
   LATEST_RELEASE=$(wget -qO- "$RELEASE_INFO_URL")
@@ -74,9 +73,9 @@ else
   LATEST_RELEASE=$(curl -s "$RELEASE_INFO_URL")
 fi
 
-VERSION=$(echo "$LATEST_RELEASE"      | awk -F= '/version=/  { print $2 }')
-DOWNLOAD_FILENAME=$(echo "$LATEST_RELEASE"     | awk -F= '/filename=/ { print $2 }')
-DOWNLOAD_URL=$(echo "$LATEST_RELEASE" | awk -F= '/url=/      { print $2 }')
+VERSION=$LATEST_RELEASE
+DOWNLOAD_FILENAME="regle_daemon_${VERSION}_${ARCH}.tar.gz"
+DOWNLOAD_URL="https://github.com/regledev/daemon/releases/download/${VERSION}/${DOWNLOAD_FILENAME}"
 
 function download-regle {
   REGLE_DOWNLOAD_TMP_FILE="/tmp/regle-daemon-download-$$.txt"
@@ -143,8 +142,8 @@ fi
 
 echo -e "\n\033[32mSuccessfully installed to $DESTINATION\033[0m
 
-You can now start the agent!
+You can now start the daemon!
 
-  $DESTINATION/bin/regle-agent start
+  $DESTINATION/bin/regle-daemon
 
 "
