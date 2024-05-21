@@ -137,7 +137,7 @@ chmod +x "$DESTINATION"/bin/regle-daemon
 if [[ -n $REGLE_API_KEY ]]; then
   echo $REGLE_API_KEY > $DESTINATION/key
 else
-echo -e "\n\033[36mDon't forget to create `key` file with your API token! You can create one on \"API\" page in Regle\033[0m"
+echo -e "\n\033[36mDon't forget to create \`key\` file with your API token! You can create one on \"API\" page in Regle\033[0m"
 fi
 
 echo -e "\n\033[32mSuccessfully installed to $DESTINATION\033[0m
